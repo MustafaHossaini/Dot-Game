@@ -41,7 +41,7 @@
 
         // add game click
         const clickSound = new Audio();
-        clickSound.src="./click.wav"
+        clickSound.src = "./click.wav"
 
 
 
@@ -50,18 +50,34 @@
         let clickedAlready = false;
 
         // every time dot is clicked, increment counter
-        dot.addEventListener('click', function () {
+        dot.addEventListener('mousedown', function () {
             // if not clicked already
-            if (!clickedAlready) {
-                counter.textContent = Number(counter.textContent) + 1;
-                clickSound.play();
-                clickedAlready = true;
-            }
+
+            counter.textContent = Number(counter.textContent) + 1;
+            clickSound.currentTime = 0;
+            clickSound.play();
+            setDotToNewRandomPosition()
+            resetInterval()
+
         })
 
 
         // every second move the dot
-        setInterval(function () {
+        let t = setInterval(function () {
+            setDotToNewRandomPosition()
+
+        }, 2000)
+
+        function resetInterval() {
+            clearInterval(t)
+
+            t = setInterval(function () {
+                setDotToNewRandomPosition()
+
+            }, 2000)
+        }
+
+        function setDotToNewRandomPosition() {
             let screenWidth = document.body.clientWidth;
             let screenHeight = document.body.clientHeight;
 
@@ -70,12 +86,7 @@
 
             dot.style.left = newPositionX;
             dot.style.top = newPositionY;
-
-
-            // reset some things, every time dot moves
-            clickedAlready = false;
-
-        }, 2000)
+        }
     </script>
 </body>
 
