@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+
+        .dot {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: red;
+            position: fixed;
+        }
+
+        .counter-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .counter {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dot"></div>
+    <div class="counter-wrapper">
+        <div class="counter-label">Score:</div>
+        <div class="counter">0</div>
+    </div>
+
+    <script>
+
+        // add game click
+        const clickSound = new Audio();
+        clickSound.src="./click.wav"
+
+
+
+        const dot = document.querySelector('.dot');
+        const counter = document.querySelector('.counter');
+        let clickedAlready = false;
+
+        // every time dot is clicked, increment counter
+        dot.addEventListener('click', function () {
+            // if not clicked already
+            if (!clickedAlready) {
+                counter.textContent = Number(counter.textContent) + 1;
+                clickSound.play();
+                clickedAlready = true;
+            }
+        })
+
+
+        // every second move the dot
+        setInterval(function () {
+            let screenWidth = document.body.clientWidth;
+            let screenHeight = document.body.clientHeight;
+
+            let newPositionX = Math.floor(Math.random() * screenWidth);
+            let newPositionY = Math.floor(Math.random() * screenHeight);
+
+            dot.style.left = newPositionX;
+            dot.style.top = newPositionY;
+
+
+            // reset some things, every time dot moves
+            clickedAlready = false;
+
+        }, 2000)
+    </script>
+</body>
+
+</html>
